@@ -10,7 +10,7 @@ void ledDriver_led_on(uint16_t* address, uint8_t led) {
 }
 
 void ledDriver_led_off(uint16_t* address, uint8_t led) {
-    
+    *address &= (1 << (led - 1));
 }
 
 void ledDriver_all_leds_on(uint16_t* address) {
