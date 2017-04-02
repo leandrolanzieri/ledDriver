@@ -55,3 +55,23 @@ void test_DriverGetLedStateDebeDarEstadoLed() {
     led = ledDriver_get_led_state(address, 16);
     TEST_ASSERT_EQUAL_HEX16(0, led);
 }
+
+void test_DriverDebeIgnorarLedsNoDefinidos() {
+    address = 0;
+    ledDriver_led_on(&address, 17);
+    TEST_ASSERT_EQUAL_HEX16(0, address);
+    ledDriver_led_on(&address, 0);
+    TEST_ASSERT_EQUAL_HEX16(0, address);
+}
+
+void test_DiverDebeFuncionarConValoresLimite() {
+    address = 0;
+    ledDriver_led_on(&address, 1);
+    TEST_ASSERT_EQUAL_HEX16(1, address);
+    ledDriver_led_off(&address, 1);
+    TEST_ASSERT_EQUAL_HEX16(0, address);
+    ledDriver_led_on(&address, 16);
+    TEST_ASSERT_EQUAL_HEX16(0x8000, address);
+    ledDriver_led_off(&address, 16);
+    TEST_ASSERT_EQUAL_HEX16(0, address);
+}
