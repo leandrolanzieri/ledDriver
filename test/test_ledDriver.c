@@ -26,12 +26,12 @@ void test_DriverCreateDebeApagarTodosLosLeds() {
 
 void test_DriverLedOnDebeEncenderLedSeleccionado() {
     ledDriver_led_on(&address, 5);
-    TEST_ASSERT_EQUAL_HEX16(0x0020, address);
+    TEST_ASSERT_EQUAL_HEX16(0x0010, address);
 }
 
 void test_DiverLedOffDebeApagarLedSeleccionado() {
     address = 0xFFFF;
-    ledDriver_led_on(&address, 5);
+    ledDriver_led_off(&address, 5);
     TEST_ASSERT_EQUAL_HEX16(0xFFDF, address);
 }
 
