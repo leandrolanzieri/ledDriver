@@ -35,6 +35,23 @@ void test_DiverLedOffDebeApagarLedSeleccionado() {
     TEST_ASSERT_EQUAL_HEX16(0xFFEF, address);
 }
 
+void test_DriverDebeApagarYEncenderVariosLeds() {
+    address = 0;
+    ledDriver_led_on(&address, 5);
+    TEST_ASSERT_EQUAL_HEX16(0x0010, address);
+    ledDriver_led_on(&address, 16);
+    TEST_ASSERT_EQUAL_HEX16(0x8010, address);
+    ledDriver_led_on(&address, 1);
+    TEST_ASSERT_EQUAL_HEX16(0x8011, address);
+
+    ledDriver_led_off(&address, 5);
+    TEST_ASSERT_EQUAL_HEX16(0x8001, address);
+    ledDriver_led_off(&address, 1);
+    TEST_ASSERT_EQUAL_HEX16(0x8000, address);
+    ledDriver_led_off(&address, 16);
+    TEST_ASSERT_EQUAL_HEX16(0, address);
+}
+
 void test_DriverAllLedsOnDebeEncenderTodosLosLeds() {
     address = 0;
     ledDriver_all_leds_on(&address);
