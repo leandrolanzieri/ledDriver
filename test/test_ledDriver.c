@@ -66,7 +66,7 @@ void test_DriverAllLedsOffDebeApagarTodosLosLeds() {
 
 void test_DriverGetLedStateDebeDarEstadoLed() {
     address = 1;
-    uint8_t led = ledDriver_get_led_state(address, 1);
+    int8_t led = ledDriver_get_led_state(address, 1);
     TEST_ASSERT_EQUAL_HEX16(1, led);
 
     led = ledDriver_get_led_state(address, 16);
@@ -74,11 +74,23 @@ void test_DriverGetLedStateDebeDarEstadoLed() {
 }
 
 void test_DriverDebeIgnorarLedsNoDefinidos() {
+    int8_t led;
     address = 0;
     ledDriver_led_on(&address, 17);
     TEST_ASSERT_EQUAL_HEX16(0, address);
     ledDriver_led_on(&address, 0);
     TEST_ASSERT_EQUAL_HEX16(0, address);
+
+    address = 0xFFFF;
+    ledDriver_led_off(&address, 17);
+    TEST_ASSERT_EQUAL_HEX16(0xFFFF, address);
+    ledDriver_led_off(&address, 0);
+    TEST_ASSERT_EQUAL_HEX16(0xFFFF, address);
+    
+    led = ledDriver_get_led_state(address, 17);
+    TEST_ASSERT_EQUAL_INT16(-1, led);
+    led =ledDriver_get_led_state(address, 0);
+    TEST_ASSERT_EQUAL_INT16(-1, led);
 }
 
 void test_DiverDebeFuncionarConValoresLimite() {
